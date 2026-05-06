@@ -17,10 +17,21 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+
+    protected $table = "tblusers";
+    public $timestamps = false;
+
     protected $fillable = [
-        'name',
+        'first_name',
+        'middle_names',
+        'surname',
+        'userid',
         'email',
         'password',
+        'createuser',
+        'createdate',
+        'modifyuser',
+        'modifydate'
     ];
 
     /**

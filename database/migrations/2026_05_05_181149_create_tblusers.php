@@ -21,9 +21,11 @@ return new class extends Migration
             $table->string("password");
             $table->string('email')->unique();
             $table->timestamp('email_verified_at');
-            $table->timestamp('createdate')->useCurrent();
+            $table->boolean('deleted')->default(0);
             $table->string('createuser');
-            $table->timestamp('modifyuser')->useCurrentOnUpdate();
+            $table->timestamp('createdate')->useCurrent();
+            $table->string('modifyuser');
+            $table->timestamp('modifydate')->useCurrentOnUpdate();
         });
     }
 
