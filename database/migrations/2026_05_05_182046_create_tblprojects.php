@@ -13,7 +13,19 @@ return new class extends Migration
     {
         Schema::create('tblprojects', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string("project_id")->unique();
+            $table->string('userid');
+            $table->foreign('userid')->references('userid')->on('tblusers');
+            $table->string("project_title");
+            $table->text("description");
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('status');
+            $table->boolean('deleted')->default(0);
+            $table->string('createuser');
+            $table->timestamp('createdate')->useCurrent();
+            $table->string('modifyuser');
+            $table->timestamp('modifydate')->useCurrentOnUpdate();
         });
     }
 

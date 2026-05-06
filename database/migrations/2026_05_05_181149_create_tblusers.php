@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('tblusers', function (Blueprint $table) {
             $table->id();
+            $table->string('userid')->unique();
             $table->string("first_name");
             $table->string("middle_names");
             $table->string("surname");

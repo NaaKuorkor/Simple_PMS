@@ -13,7 +13,15 @@ return new class extends Migration
     {
         Schema::create('tbltasks', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('project_id');
+            $table->foreign('project_id')->references('project_id')->on('tblprojects');
+            $table->string('task_desc');
+            $table->enum('status', ['pending', 'completed', 'overdue']);
+            $table->boolean('deleted')->default(0);
+            $table->string('createuser');
+            $table->timestamp('createdate')->useCurrent();
+            $table->string('modifyuser');
+            $table->timestamp('modifydate')->useCurrentOnUpdate();
         });
     }
 
