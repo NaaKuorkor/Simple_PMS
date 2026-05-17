@@ -11,7 +11,7 @@ class Project extends Model
 
     protected $fillable = [
         'project_id',
-        'userid',
+        'user_id',
         'project_title',
         'description',
         'start_date',
@@ -22,4 +22,14 @@ class Project extends Model
         'modifyuser',
         'modifydate'
     ];
+
+    function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
+
+    function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

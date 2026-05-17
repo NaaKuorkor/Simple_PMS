@@ -18,4 +18,14 @@ class Task extends Model
         'modifyuser',
         'modifydate'
     ];
+
+    function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id', 'project_id');
+    }
+
+    function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }
