@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('tblusers', function (Blueprint $table) {
             $table->id();
-            $table->string('userid')->unique();
+            $table->string('user_id')->unique();
             $table->string("first_name");
             $table->string("middle_names");
             $table->string("surname");
             $table->string("username")->unique();
             $table->string("password");
+            $table->string("phone");
             $table->string('email')->unique();
             $table->timestamp('email_verified_at');
             $table->boolean('deleted')->default(0);
