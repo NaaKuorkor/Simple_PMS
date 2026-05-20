@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 
@@ -23,7 +24,7 @@ class AuthController extends Controller
                 "username" => "string|required|unique",
                 "phone" => "string|required|max:12",
                 "email" => "email|required",
-                "password" => "string|required|min:8"
+                "password" => "string|required|min:8|confirmed"
             ]);
 
             do {
@@ -33,7 +34,7 @@ class AuthController extends Controller
             $user = User::create([
                 "user_id" => $user_id,
                 "first_name" => $data["first_name"],
-                "middle_name" => $data["middle_name"],
+                "middle_name" => $data["middle_names"],
                 "surname" => $data["surname"],
                 "username" => $data["username"],
                 "email" => $data["email"],
@@ -50,17 +51,21 @@ class AuthController extends Controller
 
             Mail::to($user->email)->send(new EmailVerificationMail($user, $url));
 
-            return response()->json([
-                "status" => "success",
-                "message" => "Registration successful! Check your mail inbox for an email verification link to proceed."
-            ]);
+            return;
         } catch (\Exception $e) {
+            Log::error([
+                "message" => $e->getMessage(),
+                "trace" => $e->getTraceAsString()
+            ]);
+
             return redirect()->back()->withErrors([
                 "error" => $e->getMessage(),
                 "message" => "An error occured in creating your account"
             ]);
         }
     }
+
+    public function verifyEmail() {}
 
     public function login(Request $request)
     {
