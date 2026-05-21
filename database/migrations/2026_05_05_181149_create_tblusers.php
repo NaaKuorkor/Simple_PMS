@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string("password");
             $table->string("phone");
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at');
+            $table->timestamp('email_verified_at')->nullable();
             $table->boolean('deleted')->default(0);
             $table->string('createuser');
             $table->timestamp('createdate')->useCurrent();

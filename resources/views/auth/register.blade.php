@@ -3,6 +3,12 @@
 @section('content')
 
 <div>
+    <h2>Registration</h2>
+    @if(session('error'))
+        <div>
+        {{ session('error')}}
+        </div>
+    @endif
     <form method="POST" action="">
         @csrf
 

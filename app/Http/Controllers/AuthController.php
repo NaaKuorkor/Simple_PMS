@@ -21,9 +21,9 @@ class AuthController extends Controller
                 "first_name" => "string|required|max:100",
                 "middle_names" => "string|nullable",
                 "surname" => "string|required|max:100",
-                "username" => "string|required|unique",
+                "username" => "string|required|unique:tblusers,username",
                 "phone" => "string|required|max:12",
-                "email" => "email|required",
+                "email" => "email|required|unique:tblusers,email",
                 "password" => "string|required|min:8|confirmed"
             ]);
 
@@ -34,7 +34,7 @@ class AuthController extends Controller
             $user = User::create([
                 "user_id" => $user_id,
                 "first_name" => $data["first_name"],
-                "middle_name" => $data["middle_names"],
+                "middle_names" => $data["middle_names"],
                 "surname" => $data["surname"],
                 "username" => $data["username"],
                 "email" => $data["email"],
@@ -51,29 +51,74 @@ class AuthController extends Controller
 
             Mail::to($user->email)->send(new EmailVerificationMail($user, $url));
 
-            return;
+            return redirect()->route('login')->with('success', 'Verification email sent. Please check your inbox.');
         } catch (\Exception $e) {
-            Log::error([
+            Log::error('Registration failed', [
                 "message" => $e->getMessage(),
                 "trace" => $e->getTraceAsString()
             ]);
 
-            return redirect()->back()->withErrors([
-                "error" => $e->getMessage(),
-                "message" => "An error occured in creating your account"
-            ]);
+            return back()->with("error", "An error occured in creating your account");
         }
     }
 
-    public function verifyEmail() {}
+    public function verifyEmail($id)
+    {
+        $user = User::findOrFail($id);
+
+        if (! $user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+        }
+
+        return redirect()->route('login')->with('success', 'Email verified successfully. Proceed to login');
+    }
 
     public function login(Request $request)
     {
         $data = $request->validate([
-            "email" => "string|required",
+            "email" => "email|required",
             "password" => "string|required|min:8"
         ]);
+
+        try {
+            $user = User::where('email', $data['email'])->first();
+
+            if (!$user || !Hash::check($data['password'], $user->password)) {
+                return back()->withErrors([
+                    'email' =>  'Credentials do not match our records'
+                ])->onlyInput();
+            }
+
+            if (!$user->email_verified_at) {
+                return back()->withErrors([
+                    'email' => "Verify your email first"
+                ])->onlyInput();
+            }
+
+            Auth::login($user);
+
+            $request->session()->regenerate();
+
+            return redirect()->route('/')->with('success', 'Login Successful');
+        } catch (\Exception $e) {
+            Log::error('Login failed', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return back()->with('error', 'Login failed')->only('email');
+        }
     }
 
-    public function logout() {}
+    public function logout(Request $request)
+    {
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('success', 'Successfully logged out');
+    }
 }
