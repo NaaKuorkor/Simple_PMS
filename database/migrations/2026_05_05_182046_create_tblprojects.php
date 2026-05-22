@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('tblprojects', function (Blueprint $table) {
             $table->id();
             $table->string("project_id")->unique();
-            $table->string('userid');
-            $table->foreign('userid')->references('userid')->on('tblusers');
+            $table->string('user_id');
+            $table->foreign('user_id')->references('user_id')->on('tblusers');
             $table->string("project_title");
             $table->text("description");
             $table->date('start_date');

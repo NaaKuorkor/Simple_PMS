@@ -9,7 +9,7 @@
         {{ session('error')}}
         </div>
     @endif
-    <form method="POST" action="">
+    <form method="POST" action="{{ route('user.register')}}">
         @csrf
 
         <label for="first_name">First Name</label>
@@ -24,13 +24,22 @@
         <label for="email">Email</label>
         <input type="email" id="email" name="email" required>
 
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" name="phone" placeholder="+233xxxxxxxxx" maxlength="13" required>
+
         <label for="username">Username</label>
         <input type="text" id="username" name="username" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="confirm">Confirm Password</label>
+        <input type="password" id="confirm" name="password_confirmation" required>
 
         <button type="submit">Sign up</button>
 
     </form>
-    <p>Already have an account? <a href="#">Login here</a></p>
+    <p>Already have an account? <a href="/login">Login here</a></p>
 </div>
 
 @endsection

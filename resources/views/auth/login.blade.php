@@ -24,7 +24,7 @@
         <button type="submit">Login</button>
     </form>
 
-    <p>Click <a href="#">here</a> to sign up</p>
+    <p>Click <a href="/register">here</a> to sign up</p>
 </div>
 
 @endsection

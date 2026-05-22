@@ -16,13 +16,15 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
+        DB::beginTransaction();
+
         try {
             $data = $request->validate([
                 "first_name" => "string|required|max:100",
                 "middle_names" => "string|nullable",
                 "surname" => "string|required|max:100",
                 "username" => "string|required|unique:tblusers,username",
-                "phone" => "string|required|max:12",
+                "phone" => "string|required|max:13",
                 "email" => "email|required|unique:tblusers,email",
                 "password" => "string|required|min:8|confirmed"
             ]);
@@ -39,8 +41,11 @@ class AuthController extends Controller
                 "username" => $data["username"],
                 "email" => $data["email"],
                 "password" => Hash::make($data["password"]),
-                "phone" => $data["phone"]
-
+                "phone" => $data["phone"],
+                "createuser" => $data['email'],
+                "modifyuser" => $data["email"],
+                "createdate" => now(),
+                "modifydate" => now()
             ]);
 
             $url = URL::temporarySignedRoute(
@@ -51,8 +56,12 @@ class AuthController extends Controller
 
             Mail::to($user->email)->send(new EmailVerificationMail($user, $url));
 
+            DB::commit();
+
             return redirect()->route('login')->with('success', 'Verification email sent. Please check your inbox.');
         } catch (\Exception $e) {
+            DB::rollBack();
+
             Log::error('Registration failed', [
                 "message" => $e->getMessage(),
                 "trace" => $e->getTraceAsString()

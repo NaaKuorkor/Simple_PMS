@@ -16,9 +16,14 @@ class EmailVerificationMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($user, $link)
+
+    public $user;
+    public $url;
+
+    public function __construct($user, $url)
     {
-        //
+        $this->user = $user;
+        $this->url = $url;
     }
 
     /**
@@ -37,7 +42,11 @@ class EmailVerificationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'email.verifyEmail',
+            with: [
+                "user" => $this->user,
+                "url" => $this->url
+            ]
         );
     }
 
