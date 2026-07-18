@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Project extends Model
 {
@@ -31,5 +32,13 @@ class Project extends Model
     function tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    protected static function booted()
+    {
+        static::updating(function ($project) {
+            $project->modifyuser = Auth::user()?->email;
+            $project->modifydate = now();
+        });
     }
 }

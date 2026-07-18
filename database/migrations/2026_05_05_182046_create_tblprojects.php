@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('user_id');
             $table->foreign('user_id')->references('user_id')->on('tblusers');
             $table->string("project_title");
-            $table->text("description");
+            $table->text("description")->nullable();
             $table->date('start_date');
             $table->date('end_date');
             $table->string('status');

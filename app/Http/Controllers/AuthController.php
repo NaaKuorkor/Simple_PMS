@@ -6,6 +6,7 @@ use App\Mail\EmailVerificationMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -130,4 +131,29 @@ class AuthController extends Controller
 
         return redirect()->route('login')->with('success', 'Successfully logged out');
     }
+
+    /*public function forgotPassword($email)
+    {
+
+        $user = User::where("email", $email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => "Account not found"
+            ]);
+        }
+
+        $otp = rand(10000, 9999);
+        $time_limit = now()->addMinutes(5);
+
+        $user_id = $user->user_id;
+
+        Cache::put('otp: ' . $user_id, [
+            'otp' => $otp,
+            'email' => $email,
+            'user_id' => $user_id
+        ], $time_limit);
+    }
+
+    public function verifyOTP(Request $request) {}*/
 }
