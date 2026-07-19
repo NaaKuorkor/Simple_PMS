@@ -18,9 +18,15 @@ class TaskController extends Controller
         return $tasks;
     }
 
-    public function create() {}
+    public function create()
+    {
+        return view(/*Put view in here for project creation form*/);
+    }
 
-    public function show() {}
+    public function show($id)
+    {
+        return Task::where('id', $id)->firstOrFail();
+    }
 
     public function store(Request $request, $id)
     {
@@ -58,7 +64,10 @@ class TaskController extends Controller
         }
     }
 
-    public function edit() {}
+    public function edit()
+    {
+        return view(/*Put view in here for task edit form*/);
+    }
 
     public function update(Request $request, $id)
     {
@@ -82,5 +91,25 @@ class TaskController extends Controller
         }
     }
 
-    public function destroy() {}
+    public function destroy($id)
+    {
+        try {
+            Task::destroy($id);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Task deleted successfully!'
+            ]);
+        } catch (Exception $e) {
+            Log::error('Task deletion failed', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Task deletion failed'
+            ]);
+        }
+    }
 }
