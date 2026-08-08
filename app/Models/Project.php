@@ -36,6 +36,13 @@ class Project extends Model
 
     protected static function booted()
     {
+        static::creating(function ($project) {
+            $project->createdate = now();
+            $project->createuser = Auth::user()?->email;
+            $project->modifydate = now();
+            $project->modifyuser = Auth::user()?->email;
+        });
+
         static::updating(function ($project) {
             $project->modifyuser = Auth::user()?->email;
             $project->modifydate = now();

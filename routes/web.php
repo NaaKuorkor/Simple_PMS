@@ -12,8 +12,8 @@ Route::view('/register', 'auth.register')->name('register');
 
 
 Route::post('/login', [AuthController::class, 'login'])->name('user.login');
-Route::get('/verify-email/{id}', [AuthController::class, 'verifyEmail'])->middleware('signed')->name('verify.email');
-Route::post('/user-register', [AuthController::class, "register"])->name('user.register');
+Route::get('/verify_email/{id}', [AuthController::class, 'verifyEmail'])->middleware('signed')->name('verify.email');
+Route::post('/user_register', [AuthController::class, "register"])->name('user.register');
 
 //Project Routes
 //An easier way -> Route::resource('projects', ProjectController::class);
@@ -23,6 +23,7 @@ Route::prefix('projects')->group(function () {
     Route::post('/store', [ProjectController::class, 'store'])->name('projects.store');
     Route::get('/show/{id}', [ProjectController::class, 'show'])->name('projects.show');
     Route::put('/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
+    Route::get('/edit/{id}', [ProjectController::class, 'edit'])->name('projects.edit');
     Route::delete('/destroy/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 });
 
@@ -34,5 +35,6 @@ Route::prefix('tasks')->group(function () {
     Route::post('/store', [TaskController::class, 'store'])->name('tasks.store');
     Route::get('/show/{id}', [TaskController::class, 'show'])->name('tasks.show');
     Route::put('/update/{id}', [TaskController::class, 'update'])->name('tasks.update');
+    Route::get('/edit/{id}', [TaskController::class, 'edit'])->name('tasks.edit');
     Route::delete('/destroy/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 });

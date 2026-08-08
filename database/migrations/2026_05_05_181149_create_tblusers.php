@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('createuser');
             $table->timestamp('createdate')->useCurrent();
             $table->string('modifyuser');
-            $table->timestamp('modifydate')->useCurrentOnUpdate();
+            $table->timestamp('modifydate')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

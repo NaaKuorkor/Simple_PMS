@@ -18,14 +18,14 @@ return new class extends Migration
             $table->foreign('user_id')->references('user_id')->on('tblusers');
             $table->string("project_title");
             $table->text("description")->nullable();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->string('status');
             $table->boolean('deleted')->default(0);
             $table->string('createuser');
             $table->timestamp('createdate')->useCurrent();
             $table->string('modifyuser');
-            $table->timestamp('modifydate')->useCurrentOnUpdate();
+            $table->timestamp('modifydate')->useCurrent()->useCurrentOnUpdate();
         });
     }
 
