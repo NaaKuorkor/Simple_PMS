@@ -109,7 +109,7 @@ class AuthController extends Controller
 
             $request->session()->regenerate();
 
-            return redirect()->route('/')->with('success', 'Login Successful');
+            return redirect()->route('projects.index')->with('success', 'Login Successful');
         } catch (\Exception $e) {
             Log::error('Login failed', [
                 'message' => $e->getMessage(),

@@ -24,7 +24,8 @@ class UserSeeder extends Seeder
             'password' => Hash::make("Decode@20"),
             'user_id' => "USR_1",
             'createuser' => 'naakotey52@gmail.com',
-            'modifyuser' => 'naakotey52@gmail.com'
+            'modifyuser' => 'naakotey52@gmail.com',
+            'email_verified_at' => now()
         ]);
     }
 }

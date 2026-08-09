@@ -15,6 +15,8 @@ Route::post('/login', [AuthController::class, 'login'])->name('user.login');
 Route::get('/verify_email/{id}', [AuthController::class, 'verifyEmail'])->middleware('signed')->name('verify.email');
 Route::post('/user_register', [AuthController::class, "register"])->name('user.register');
 
+
+
 //Project Routes
 //An easier way -> Route::resource('projects', ProjectController::class);
 Route::prefix('projects')->group(function () {
@@ -25,7 +27,7 @@ Route::prefix('projects')->group(function () {
     Route::put('/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
     Route::get('/edit/{id}', [ProjectController::class, 'edit'])->name('projects.edit');
     Route::delete('/destroy/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
-});
+})->middleware("auth");
 
 //Task Routes
 //An easier way -> Route::resource('tasks', TaskController::class);
@@ -37,4 +39,4 @@ Route::prefix('tasks')->group(function () {
     Route::put('/update/{id}', [TaskController::class, 'update'])->name('tasks.update');
     Route::get('/edit/{id}', [TaskController::class, 'edit'])->name('tasks.edit');
     Route::delete('/destroy/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
-});
+})->middleware("auth");

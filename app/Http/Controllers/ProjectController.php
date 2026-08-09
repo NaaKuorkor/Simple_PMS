@@ -13,7 +13,9 @@ class ProjectController extends Controller
     //Show all projects
     public function index()
     {
-        return Project::all();
+        $projects = Project::all();
+
+        return view('main', compact($projects));
     }
 
     //Show form to create project
