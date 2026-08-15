@@ -21,7 +21,7 @@ class ProjectController extends Controller
     //Show form to create project
     public function create()
     {
-        return view(/*Put view in here for project creation form*/);
+        return view('projects.project_form');
     }
 
     //Save data of a new project
@@ -70,19 +70,19 @@ class ProjectController extends Controller
     }
 
     //Show a particular project
-    public function show($project_id)
+    public function show(Project $project)
     {
-        return Project::where('project_id', $project_id)->firstOrFail();
+        return view('project.edit_form', compact($project));
     }
 
     //How view for editing a record
-    public function edit()
+    public function edit(Project $project)
     {
-        return view(/*Put view in here for project edit form*/);
+        return view('project.edit_form', compact($project));
     }
 
     //Save edit made to a project
-    public function update(Request $request, $id)
+    public function update(Request $request, Project $project)
     {
         try {
             $deets = $request->validate([
@@ -93,7 +93,6 @@ class ProjectController extends Controller
                 'status' => 'string|required'
             ]);
 
-            $project = Project::where('project_id', $id)->firstOrFail();
 
             $project->update($deets);
 
@@ -115,10 +114,10 @@ class ProjectController extends Controller
     }
 
     //Delete a project
-    public function destroy($id)
+    public function destroy(Project $project)
     {
         try {
-            Project::destroy($id);
+            $project->delete();
 
             return response()->json([
                 'status' => 'success',

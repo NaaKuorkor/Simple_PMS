@@ -20,27 +20,26 @@ class TaskController extends Controller
 
     public function create()
     {
-        return view(/*Put view in here for project creation form*/);
+        return view('tasks.task_form');
     }
 
-    public function show($id)
+    /*public function show(Task $task)
     {
         return Task::where('id', $id)->firstOrFail();
-    }
+    }*/
 
-    public function store(Request $request, $id)
+    public function store(Request $request, Project $project)
     {
 
         try {
-            $project = Project::where('project_id', $id)->firstOrFail();
 
             $deets = $request->validate([
-                //'project_id' => 'required|string',
+
                 'task_desc' => 'required|string',
                 'status' => 'required|string|max:9',
             ]);
 
-            Task::create([
+            $project->tasks->create([
                 'project_id' => $project->project_id,
                 'task_desc' =>  $deets['task_desc'],
                 'status' =>  $deets['status'],
@@ -50,7 +49,10 @@ class TaskController extends Controller
                 'modifydate' => now(),
             ]);
 
-            return response()->json([]);
+            return response()->json([
+                'status' => "success",
+                'message' => "Task created successfully"
+            ]);
         } catch (Exception $e) {
             Log::error('Task setup failed', [
                 'message' => $e->getMessage(),
@@ -64,9 +66,9 @@ class TaskController extends Controller
         }
     }
 
-    public function edit()
+    public function edit(Task $task)
     {
-        return view(/*Put view in here for task edit form*/);
+        return view('tasks.task_form', compact($task));
     }
 
     public function update(Request $request, $id)
@@ -91,10 +93,10 @@ class TaskController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Task $task)
     {
         try {
-            Task::destroy($id);
+            $task->delete();
 
             return response()->json([
                 'status' => 'success',

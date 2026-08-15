@@ -22,7 +22,7 @@ Route::post('/user_register', [AuthController::class, "register"])->name('user.r
 Route::prefix('projects')->group(function () {
     Route::get('/', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/create', [ProjectController::class, 'create'])->name('projects.create');
-    Route::post('/store', [ProjectController::class, 'store'])->name('projects.store');
+    Route::post('{project}/store', [ProjectController::class, 'store'])->name('projects.store');
     Route::get('/show/{id}', [ProjectController::class, 'show'])->name('projects.show');
     Route::put('/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
     Route::get('/edit/{id}', [ProjectController::class, 'edit'])->name('projects.edit');
