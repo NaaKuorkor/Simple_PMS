@@ -68,7 +68,7 @@ class TaskController extends Controller
 
     public function edit(Task $task)
     {
-        return view('tasks.task_form', compact($task));
+        return view('tasks.task_form', compact('task'));
     }
 
     public function update(Request $request, $id)

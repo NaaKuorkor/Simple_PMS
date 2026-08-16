@@ -15,13 +15,15 @@ class ProjectController extends Controller
     {
         $projects = Project::all();
 
-        return view('main', compact($projects));
+        return view('main', compact('projects'));
     }
 
     //Show form to create project
     public function create()
     {
-        return view('projects.project_form');
+        $project = new Project();
+
+        return view('projects.project_form', compact('project'));
     }
 
     //Save data of a new project
@@ -72,13 +74,13 @@ class ProjectController extends Controller
     //Show a particular project
     public function show(Project $project)
     {
-        return view('project.edit_form', compact($project));
+        return view('project.edit_form', compact('project'));
     }
 
     //How view for editing a record
     public function edit(Project $project)
     {
-        return view('project.edit_form', compact($project));
+        return view('project.edit_form', compact('project'));
     }
 
     //Save edit made to a project

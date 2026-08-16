@@ -71,7 +71,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         static::updating(function ($user) {
             $user->modifydate = now();
-            $user->modifyuser = Auth::user()?->email;
+            $user->modifyuser = Auth::user()?->email ?? 'system';
         });
     }
 

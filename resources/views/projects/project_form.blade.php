@@ -2,8 +2,8 @@
 
 @section ('content')
     <div>
-        <form action="{{$project->exists ? route('projects.update'):route('projects.store'))}}" method='POST'>
-            @if($product->exists)
+        <form action="{{$project->exists ? route('projects.update'):route('projects.store')}}" method='POST'>
+            @if($project->exists)
                 @method('PUT')
             @endif
             @csrf

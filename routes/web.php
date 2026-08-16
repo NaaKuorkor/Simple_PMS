@@ -22,7 +22,7 @@ Route::post('/user_register', [AuthController::class, "register"])->name('user.r
 Route::prefix('projects')->group(function () {
     Route::get('/', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/create', [ProjectController::class, 'create'])->name('projects.create');
-    Route::post('{project}/store', [ProjectController::class, 'store'])->name('projects.store');
+    Route::post('/store', [ProjectController::class, 'store'])->name('projects.store');
     Route::get('/show/{id}', [ProjectController::class, 'show'])->name('projects.show');
     Route::put('/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
     Route::get('/edit/{id}', [ProjectController::class, 'edit'])->name('projects.edit');
@@ -34,7 +34,7 @@ Route::prefix('projects')->group(function () {
 Route::prefix('tasks')->group(function () {
     Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
     Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
-    Route::post('/store', [TaskController::class, 'store'])->name('tasks.store');
+    Route::post('{project}/store', [TaskController::class, 'store'])->name('tasks.store');
     Route::get('/show/{id}', [TaskController::class, 'show'])->name('tasks.show');
     Route::put('/update/{id}', [TaskController::class, 'update'])->name('tasks.update');
     Route::get('/edit/{id}', [TaskController::class, 'edit'])->name('tasks.edit');
