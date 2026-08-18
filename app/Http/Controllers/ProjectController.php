@@ -41,7 +41,10 @@ class ProjectController extends Controller
 
             $user_id = Auth::user()->user_id;
 
+            $project_id = 'PR' . rand(100, 999);
+
             Project::create([
+                'project_id' => $project_id,
                 'user_id' => $user_id,
                 'project_title' => $deets['project_title'],
                 'description' => $deets['description'],
