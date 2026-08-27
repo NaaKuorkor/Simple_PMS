@@ -23,10 +23,10 @@ Route::prefix('projects')->group(function () {
     Route::get('/', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/create', [ProjectController::class, 'create'])->name('projects.create');
     Route::post('/store', [ProjectController::class, 'store'])->name('projects.store');
-    Route::get('/show/{id}', [ProjectController::class, 'show'])->name('projects.show');
-    Route::put('/update/{id}', [ProjectController::class, 'update'])->name('projects.update');
-    Route::get('/edit/{id}', [ProjectController::class, 'edit'])->name('projects.edit');
-    Route::delete('/destroy/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+    Route::get('/show/{project}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::put('/update/{project}', [ProjectController::class, 'update'])->name('projects.update');
+    Route::get('/edit/{project}', [ProjectController::class, 'edit'])->name('projects.edit');
+    Route::delete('/destroy/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 })->middleware("auth");
 
 //Task Routes
