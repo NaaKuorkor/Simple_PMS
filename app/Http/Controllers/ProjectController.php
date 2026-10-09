@@ -77,7 +77,7 @@ class ProjectController extends Controller
     //Show a particular project
     public function show(Project $project)
     {
-        return view('projects.project_form', compact('project'));
+        return view('projects.show', compact('project'));
     }
 
     //How view for editing a record
@@ -89,6 +89,7 @@ class ProjectController extends Controller
     //Save edit made to a project
     public function update(Request $request, Project $project)
     {
+
         try {
             $deets = $request->validate([
                 'project_title' => 'string|required',

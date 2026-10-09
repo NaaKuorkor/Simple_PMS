@@ -2,15 +2,15 @@
 
 @section('content')
     <div>
-        <form action="{{ $task->exists ? route('tasks.update') : route('tasks.create') }}" method="POST">
-            @if($project->exists)
+        <form action="{{ $task->exists ? route('tasks.update', ['id' => $task->id]) : route('tasks.store', ['project' => $project->id]) }}" method="POST">
+            @if($task->exists)
                 @method('PUT')
             @endif
             @csrf
-            <label id="task_desc">Task</label>
+            <label for="task_desc">Task</label>
             <input type="text" id="task_desc" name="task_desc" required value={{ old('task_desc', $task->task_desc)}}>
 
-            <label id="status">Status</label>
+            <label for="status">Status</label>
             <select id="status" name="status">
                 <option value="Pending" @selected(old('status', $task->status) == 'Pending')>Pending</option>
                 <option value="In Progress" @selected(old('status', $task->status) == 'In Progress')>In Progress</option>

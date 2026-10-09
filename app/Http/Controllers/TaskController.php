@@ -13,14 +13,16 @@ class TaskController extends Controller
 {
     public function index($project_id)
     {
-        $tasks = Task::where('project_id', $project_id);
+        $tasks = Task::where('project_id', $project_id)->get();
 
         return $tasks;
     }
 
-    public function create()
+    public function create(Project $project)
     {
-        return view('tasks.task_form');
+        $task = new Task;
+
+        return view('tasks.task_form', compact('task', 'project'));
     }
 
     /*public function show(Task $task)

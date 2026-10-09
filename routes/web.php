@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'auth.login');
 Route::view('/login', 'auth.login')->name("login");
 Route::view('/register', 'auth.register')->name('register');
-
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 
 Route::post('/login', [AuthController::class, 'login'])->name('user.login');
 Route::get('/verify_email/{id}', [AuthController::class, 'verifyEmail'])->middleware('signed')->name('verify.email');
@@ -32,8 +32,8 @@ Route::prefix('projects')->group(function () {
 //Task Routes
 //An easier way -> Route::resource('tasks', TaskController::class);
 Route::prefix('tasks')->group(function () {
-    Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
-    Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
+    Route::get('/{project}/create', [TaskController::class, 'create'])->name('tasks.create');
+    Route::get('/{project}', [TaskController::class, 'index'])->name('tasks.index');
     Route::post('{project}/store', [TaskController::class, 'store'])->name('tasks.store');
     Route::get('/show/{id}', [TaskController::class, 'show'])->name('tasks.show');
     Route::put('/update/{id}', [TaskController::class, 'update'])->name('tasks.update');
