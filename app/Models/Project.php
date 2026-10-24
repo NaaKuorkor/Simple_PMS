@@ -31,7 +31,7 @@ class Project extends Model
 
     function tasks()
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class, "project_id", "project_id");
     }
 
     protected static function booted()
