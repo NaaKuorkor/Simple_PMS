@@ -41,14 +41,10 @@ class TaskController extends Controller
                 'status' => 'required|string|max:9',
             ]);
 
-            $project->tasks->create([
+            $project->tasks()->create([
                 'project_id' => $project->project_id,
                 'task_desc' =>  $deets['task_desc'],
                 'status' =>  $deets['status'],
-                'createuser' => Auth::user()->email,
-                'createdate' => now(),
-                'modifyuser' => Auth::user()->email,
-                'modifydate' => now(),
             ]);
 
             return response()->json([
