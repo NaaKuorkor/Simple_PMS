@@ -6,16 +6,18 @@ use App\Models\Project;
 use App\Models\Task;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
-    public function index($project_id)
+    public function index(Project $project)
     {
-        $tasks = Task::where('project_id', $project_id)->get();
 
-        return $tasks;
+        return $project->tasks()->get([
+            "task_desc",
+            "status",
+            "createdate"
+        ]);
     }
 
     public function create(Project $project)
@@ -69,7 +71,7 @@ class TaskController extends Controller
         return view('tasks.task_form', compact('task'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Task $task)
     {
 
         try {
@@ -78,11 +80,12 @@ class TaskController extends Controller
                 'status' => 'required|string|max:9',
             ]);
 
-            $task = Task::where('id', $id)->firstOrFail();
-
             $task->update($deets);
 
-            return response()->json([]);
+            return response()->json([
+                'status' => "success",
+                'message' => "Task updated successfully"
+            ]);
         } catch (Exception $e) {
             Log::error('Task update failed', [
                 'message' => $e->getMessage(),

@@ -37,6 +37,6 @@ Route::prefix('tasks')->group(function () {
     Route::post('{project}/store', [TaskController::class, 'store'])->name('tasks.store');
     Route::get('/show/{id}', [TaskController::class, 'show'])->name('tasks.show');
     Route::put('/update/{id}', [TaskController::class, 'update'])->name('tasks.update');
-    Route::get('/edit/{id}', [TaskController::class, 'edit'])->name('tasks.edit');
-    Route::delete('/destroy/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+    Route::get('/edit/{task}', [TaskController::class, 'edit'])->name('tasks.edit');
+    Route::delete('/destroy/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 })->middleware("auth");

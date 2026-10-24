@@ -2,7 +2,7 @@
 
 @section('content')
     <div>
-        <form action="{{ $task->exists ? route('tasks.update', ['id' => $task->id]) : route('tasks.store', ['project' => $project->id]) }}" method="POST">
+        <form action=" @if($task->exists) {{ route('tasks.update', ['id' => $task->id])}}@else{{ route('tasks.store', ['project' => $project->id]) }}@endif" method="POST">
             @if($task->exists)
                 @method('PUT')
             @endif
